@@ -19,14 +19,15 @@ export default function App() {
   const [guessRounds, setGuessRounds] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // if (!dataLoaded) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={fetchFonts}
-  //       onfinish={() => setDataLoaded(true)}
-  //     />
-  //   );
-  // }
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={(err) => console.log(err)}
+      />
+    );
+  }
 
   const configureNewGameHandler = () => {
     setGuessRounds(0);
@@ -34,6 +35,7 @@ export default function App() {
   };
 
   const startGameHandler = (selectedNumber: any) => {
+    configureNewGameHandler();
     setUserNumber(selectedNumber);
   };
 
