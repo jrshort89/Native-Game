@@ -1,11 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Dimensions,
+  Platform,
+} from "react-native";
 import Card from "../components/Card";
 import NumberContainer from "../components/NumberContainer";
 import defaultStyles from "../constants/default-styles";
 import { Ionicons } from "@expo/vector-icons";
 import MainButton from "../components/MainButton";
 import BodyText from "../components/BodyText";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 const generateRandomBetween = (
   min: number,
@@ -30,6 +39,9 @@ const renderListItem = (value: string, numRound: number) => (
 );
 
 export default function GameScreen(props: any) {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  // ScreenOrientation.getOrientationAsync
+
   const initialGuess = generateRandomBetween(1, 100, props.userChoice);
   const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
   const [pastGuesses, setPastGuesses] = useState<number[]>([initialGuess]);
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
+    marginTop: Dimensions.get("window").height > 600 ? 20 : 10,
     width: 300,
     maxWidth: "80%",
   },
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
     width: "60%",
   },
   listContainer: {
-    width: "80%",
+    width: Dimensions.get("window").width > 350 ? "60%" : "80%",
     flex: 1,
   },
   scrollList: {
